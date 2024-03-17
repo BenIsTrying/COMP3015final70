@@ -87,6 +87,13 @@ void SceneBasic_Uniform::compile()
 void SceneBasic_Uniform::update( float t )
 {
 	//update your angle here
+    if (m_animate) {
+        angle += 0.1f;
+    
+        if (angle >= 360.0f) {
+            angle -= 360.0f;
+        }
+    }
 }
 
 void SceneBasic_Uniform::render()
@@ -94,6 +101,15 @@ void SceneBasic_Uniform::render()
     glClear(GL_COLOR_BUFFER_BIT);
     
     //create the rotation matrix here and update the uniform in the shader 
+
+    rotationMatrix = glm::rotate(glm::mat4(1.0f), angle, vec3(0.0f, 0.0f, 1.0f));
+    
+    GLuint programHandle = prog.getHandle();
+    GLuint location = glGetUniformLocation(programHandle, "RotationMatrix");
+
+    glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
+
+    
 
     glBindVertexArray(vaoHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3 );
