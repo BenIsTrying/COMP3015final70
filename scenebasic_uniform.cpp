@@ -23,7 +23,7 @@ using glm::vec3;
 using glm::mat4;
 
 
-SceneBasic_Uniform::SceneBasic_Uniform() : plane(10.0f,10.0f,100,100) {
+SceneBasic_Uniform::SceneBasic_Uniform() : plane(1.0f,1.0f,100,100) {
     mesh = ObjMesh::load("media/penquin.obj");
 }
 
@@ -32,12 +32,12 @@ void SceneBasic_Uniform::initScene()
     compile();
     glEnable(GL_DEPTH_TEST);
     model = mat4(1.0f);
-    view = glm::lookAt(vec3(0.9f, 0.9f, 1.0f), vec3(0.2f, 1.9f, 0.2f), vec3(0.0f, 1.0f, 0.0f));
+    view = glm::lookAt(vec3(0.0f, 0.0f, 2.0f), vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
     //model = glm::rotate(model, glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
     //model = glm::rotate(model, glm::radians(15.0f), vec3(0.0f, 1.0f, 0.0f));//rotate on y axis
     projection = mat4(1.0f);
     model = mat4(1.0f);
-    model = glm::translate(model, vec3(0.2f, -0.8f, 0.2f));
+    model = glm::translate(model, vec3(0.1f, -2.0f, 1.0f));
 
     float x, z;
     for (int i = 0; i < 3; i++) {
@@ -81,7 +81,7 @@ void SceneBasic_Uniform::compile()
 
 void SceneBasic_Uniform::update( float t )
 {
-    model = glm::rotate(model, glm::radians(0.1f), vec3(0.0f, 1.0f, 0.1f));
+    model = glm::rotate(model, glm::radians(0.6f), vec3(0.0f, 1.0f, 0.1f));
 }
 
 void SceneBasic_Uniform::render()
