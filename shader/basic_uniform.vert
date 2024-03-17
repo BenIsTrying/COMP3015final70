@@ -55,5 +55,5 @@ void main()
     for (int i=0;i<3;i++)
         Colour+=phongModel(i,camCoords,n);
 
-    gl_Position = MVP*vec4(VertexPosition,1.3);
+    gl_Position = MVP*vec4(VertexPosition,2.0);
 }

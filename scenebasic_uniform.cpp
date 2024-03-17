@@ -24,7 +24,7 @@ using glm::mat4;
 
 
 SceneBasic_Uniform::SceneBasic_Uniform() : plane(10.0f,10.0f,100,100) {
-    mesh = ObjMesh::load("media/pig_triangulated.obj");
+    mesh = ObjMesh::load("media/penquin.obj");
 }
 
 void SceneBasic_Uniform::initScene()
@@ -32,10 +32,12 @@ void SceneBasic_Uniform::initScene()
     compile();
     glEnable(GL_DEPTH_TEST);
     model = mat4(1.0f);
-    view = glm::lookAt(vec3(0.5f, 0.75f, 0.75f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+    view = glm::lookAt(vec3(0.9f, 0.9f, 1.0f), vec3(0.2f, 1.9f, 0.2f), vec3(0.0f, 1.0f, 0.0f));
     //model = glm::rotate(model, glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
     //model = glm::rotate(model, glm::radians(15.0f), vec3(0.0f, 1.0f, 0.0f));//rotate on y axis
     projection = mat4(1.0f);
+    model = mat4(1.0f);
+    model = glm::translate(model, vec3(0.2f, -0.8f, 0.2f));
 
     float x, z;
     for (int i = 0; i < 3; i++) {
@@ -79,18 +81,20 @@ void SceneBasic_Uniform::compile()
 
 void SceneBasic_Uniform::update( float t )
 {
-    model = glm::rotate(model, glm::radians(0.3f), vec3(0.0f, 1.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(0.1f), vec3(0.0f, 1.0f, 0.1f));
 }
 
 void SceneBasic_Uniform::render()
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    
 
     prog.setUniform("Material.Kd", vec3(0.2f, 0.55f, 0.9f));
     prog.setUniform("Material.Ka", vec3(0.2f, 0.55f, 0.9f));
     prog.setUniform("Material.Ks", vec3(0.8f, 0.8f, 0.8f));
 
-    prog.setUniform("Material.Shininess", 100.0f);
+    prog.setUniform("Material.Shininess", 1000.0f);
+
 
     setMatrices();
     mesh->render();
