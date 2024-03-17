@@ -23,7 +23,8 @@ using glm::vec3;
 using glm::mat4;
 
 
-SceneBasic_Uniform::SceneBasic_Uniform() : torus(0.7f,0.3f,30,30) {
+SceneBasic_Uniform::SceneBasic_Uniform() : plane(10.0f,10.0f,100,100) {
+    mesh = ObjMesh::load("media/pig_triangulated.obj");
 }
 
 void SceneBasic_Uniform::initScene()
@@ -31,9 +32,9 @@ void SceneBasic_Uniform::initScene()
     compile();
     glEnable(GL_DEPTH_TEST);
     model = mat4(1.0f);
-    view = glm::lookAt(vec3(0.0f, 0.0f, 2.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(15.0f), vec3(0.0f, 1.0f, 0.0f));//rotate on y axis
+    view = glm::lookAt(vec3(0.5f, 0.75f, 0.75f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+    //model = glm::rotate(model, glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
+    //model = glm::rotate(model, glm::radians(15.0f), vec3(0.0f, 1.0f, 0.0f));//rotate on y axis
     projection = mat4(1.0f);
 
     float x, z;
@@ -42,7 +43,7 @@ void SceneBasic_Uniform::initScene()
         name << "lights[" << i << "].Position";
         x = 2.0f * cosf((glm::two_pi<float>() / 3) * i);
         z = 2.0f * sinf((glm::two_pi<float>() / 3) * i);
-        prog.setUniform(name.str().c_str(), view * glm::vec4(x, 1.2f, z + 1.0f, 1.0f));
+        prog.setUniform(name.str().c_str(), view * glm::vec4(x, 2.2f, z + 1.0f, 1.0f));
     }
 
     //prog.setUniform("Light.Position", view * glm::vec4(5.0f, 5.0f, 2.0f, 1.0f));
@@ -92,7 +93,8 @@ void SceneBasic_Uniform::render()
     prog.setUniform("Material.Shininess", 100.0f);
 
     setMatrices();
-    torus.render();
+    mesh->render();
+    //torus.render();
 
 }
 
