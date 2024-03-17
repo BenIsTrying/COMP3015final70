@@ -30,17 +30,26 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="helper\glutils.cpp">
-      <Filter>helper</Filter>
-    </ClCompile>
-    <ClCompile Include="helper\glslprogram.cpp">
-      <Filter>helper</Filter>
-    </ClCompile>
     <ClCompile Include="scenebasic_uniform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\glad (1)\src\glad.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="helper\teapot.cpp">
+      <Filter>helper</Filter>
+    </ClCompile>
+    <ClCompile Include="helper\torus.cpp">
+      <Filter>helper</Filter>
+    </ClCompile>
+    <ClCompile Include="helper\trianglemesh.cpp">
+      <Filter>helper</Filter>
+    </ClCompile>
+    <ClCompile Include="helper\glslprogram.cpp">
+      <Filter>helper</Filter>
+    </ClCompile>
+    <ClCompile Include="helper\glutils.cpp">
+      <Filter>helper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,26 +61,41 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="helper\scene.h">
-      <Filter>helper</Filter>
-    </ClInclude>
-    <ClInclude Include="helper\scenerunner.h">
-      <Filter>helper</Filter>
-    </ClInclude>
     <ClInclude Include="helper\stb\stb_image.h">
       <Filter>helper\stb</Filter>
     </ClInclude>
     <ClInclude Include="helper\stb\stb_image_write.h">
       <Filter>helper\stb</Filter>
     </ClInclude>
-    <ClInclude Include="helper\glutils.h">
+    <ClInclude Include="scenebasic_uniform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\drawable.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\teapot.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\teapotdata.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\torus.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\trianglemesh.h">
       <Filter>helper</Filter>
     </ClInclude>
     <ClInclude Include="helper\glslprogram.h">
       <Filter>helper</Filter>
     </ClInclude>
-    <ClInclude Include="scenebasic_uniform.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="helper\glutils.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\scene.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="helper\scenerunner.h">
+      <Filter>helper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
