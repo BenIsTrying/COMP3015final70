@@ -14,6 +14,7 @@ using std::endl;
 
 
 #include "helper/glutils.h"
+#include "helper/texture.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 
@@ -25,6 +26,7 @@ using glm::mat4;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : plane(1.0f, 1.0f, 100, 100) {
     mesh = ObjMesh::load("media/penquin.obj");
+
 }
 
 void SceneBasic_Uniform::initScene()
@@ -38,6 +40,11 @@ void SceneBasic_Uniform::initScene()
     projection = mat4(1.0f);
     model = mat4(1.0f);
     model = glm::translate(model, vec3(0.1f, -2.0f, 1.0f));
+
+    GLuint texID = Texture::loadTexture("media/texture/brick1.jpg");
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texID);
+
 
     float x, z;
     for (int i = 0; i < 3; i++) {
@@ -99,7 +106,8 @@ void SceneBasic_Uniform::render()
 
     setMatrices();
     mesh->render();
-    //torus.render();
+    //model = glm::rotate(model, glm::radians(-90.0f), vec3(0.1f, -2.0f, 1.0f));
+    cube.render();
 
 }
 
