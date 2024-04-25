@@ -17,14 +17,14 @@ using std::endl;
 #include "helper/texture.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-
-
-
 using glm::vec3;
+using glm::vec4;
 using glm::mat4;
+using glm::mat3;
 
 
 SceneBasic_Uniform::SceneBasic_Uniform() : plane(1.0f, 1.0f, 100, 100) {
+
     mesh = ObjMesh::load("media/penquin.obj");
 
 }
@@ -38,13 +38,13 @@ void SceneBasic_Uniform::initScene()
     //model = glm::rotate(model, glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
     //model = glm::rotate(model, glm::radians(15.0f), vec3(0.0f, 1.0f, 0.0f));//rotate on y axis
     projection = mat4(1.0f);
-    model = mat4(1.0f);
-    model = glm::translate(model, vec3(0.1f, -2.0f, 1.0f));
+    
 
     GLuint texID = Texture::loadTexture("media/texture/brick1.jpg");
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texID);
 
+    model = glm::translate(model, vec3(0.1f, -2.0f, 1.0f));
 
     float x, z;
     for (int i = 0; i < 3; i++) {
@@ -56,13 +56,13 @@ void SceneBasic_Uniform::initScene()
     }
 
     //prog.setUniform("Light.Position", view * glm::vec4(5.0f, 5.0f, 2.0f, 1.0f));
-    prog.setUniform("lights[0].L", vec3(0.0f, 0.0f, 0.8f));
-    prog.setUniform("lights[1].L", vec3(0.0f, 0.8f, 0.0f));
-    prog.setUniform("lights[2].L", vec3(0.8f, 0.0f, 0.0f));
+    prog.setUniform("lights[0].L", vec3(0.0f, 0.0f, 1.2f));
+    prog.setUniform("lights[1].L", vec3(0.0f, 1.2f, 0.0f));
+    prog.setUniform("lights[2].L", vec3(1.2f, 0.0f, 0.0f));
 
-    prog.setUniform("lights[0].La", vec3(0.0f, 0.0f, 0.2f));
-    prog.setUniform("lights[1].La", vec3(0.0f, 0.2f, 0.0f));
-    prog.setUniform("lights[2].La", vec3(0.2f, 0.0f, 0.0f));
+    prog.setUniform("lights[0].La", vec3(0.0f, 0.0f, 0.4f));
+    prog.setUniform("lights[1].La", vec3(0.0f, 0.4f, 0.0f));
+    prog.setUniform("lights[2].La", vec3(0.4f, 0.0f, 0.0f));
 
 
 

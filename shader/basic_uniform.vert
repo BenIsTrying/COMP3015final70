@@ -8,7 +8,6 @@ out vec3 Position;
 out vec3 Normal;
 out vec2 TexCoord;
 
-
 layout (binding=0) uniform sampler2D Tex1;
 
 uniform mat4 ModelViewMatrix;
