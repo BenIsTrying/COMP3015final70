@@ -24,10 +24,9 @@ using glm::mat3;
 
 
 SceneBasic_Uniform::SceneBasic_Uniform() : 
-    tPrev(0), angle(0.0f),rotSpeed(glm::pi<float>()/8.0f), 
-    plane(50.0f,50.0f,1,1), teapot(14,mat4(1.0f)), torus(0.7f*1.5f,0.3f*1.5f,50,50) {
-
-    //mesh = ObjMesh::load("media/penquin.obj");
+    tPrev(0), angle(0.0f),rotSpeed(glm::pi<float>()/8.0f), plane(50.0f, 50.0f, 1, 1){
+    //, teapot(14, mat4(1.0f)), torus(0.7f * 1.5f, 0.3f * 1.5f, 50, 50)
+    mesh = ObjMesh::load("media/penquin.obj");
 
 
 }
@@ -169,10 +168,10 @@ void SceneBasic_Uniform::pass1() {
     model = mat4(1.0f);
     model = glm::rotate(model, glm::radians(-90.0f), vec3(1.0f, 0.0f, 0.0f));
     setMatrices();
-    teapot.render();
+    mesh->render();
     
 
-
+    
     prog.setUniform("Material.Kd", vec3(0.4f, 0.4f, 0.4f));
     prog.setUniform("Material.Ks", vec3(0.0f, 0.0f, 0.0f));
     prog.setUniform("Material.Ka", vec3(0.1f, 0.1f, 0.1f));
@@ -184,7 +183,7 @@ void SceneBasic_Uniform::pass1() {
     plane.render();
     //std::cout << "plane should render";// i now know it is indeed rendering
 
-
+    /*
     prog.setUniform("Light.Position", glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
     
     prog.setUniform("Material.Kd", vec3(0.9f, 0.5f, 0.2f));
@@ -196,7 +195,7 @@ void SceneBasic_Uniform::pass1() {
     model = glm::translate(model, vec3(1.0f,1.0f, 3.0f));
     model = glm::rotate(model, glm::radians(90.0f), vec3(1.0f, 0.0f, 0.0f));
     setMatrices();
-    torus.render();
+    torus.render();*/
 
     //mesh->render();
 }
