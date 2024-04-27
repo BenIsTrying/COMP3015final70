@@ -26,7 +26,7 @@ using glm::mat3;
 SceneBasic_Uniform::SceneBasic_Uniform() : 
     tPrev(0), angle(0.0f),rotSpeed(glm::pi<float>()/8.0f), plane(50.0f, 50.0f, 1, 1){
     //, teapot(14, mat4(1.0f)), torus(0.7f * 1.5f, 0.3f * 1.5f, 50, 50)
-    mesh = ObjMesh::load("media/penquin.obj");
+    mesh = ObjMesh::load("media/newPenquin.obj");
 
 
 }
@@ -166,7 +166,8 @@ void SceneBasic_Uniform::pass1() {
     prog.setUniform("Material.Shininess", 100.0f);
 
     model = mat4(1.0f);
-    model = glm::rotate(model, glm::radians(-90.0f), vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(0.0f), vec3(1.0f, 0.0f, 0.0f));
+    
     setMatrices();
     mesh->render();
     
