@@ -6,8 +6,11 @@
 #include <glad/glad.h>
 #include "helper/glslprogram.h"
 #include <glm/glm.hpp>
-//#include "helper/torus.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include "helper/torus.h"
 #include "helper/plane.h"
+#include "glm/glm.hpp"
+#include "helper/teapot.h"
 #include "helper/objmesh.h"
 #include "helper/cube.h"
 
@@ -15,14 +18,23 @@
 class SceneBasic_Uniform : public Scene
 {
 private:
-    //Torus torus;
+    Torus torus;
     Plane plane;
-    std::unique_ptr<ObjMesh> mesh;
-    Cube cube;
+    Teapot teapot;
+    //std::unique_ptr<ObjMesh> mesh;
+    //Cube cube;
+    GLuint fsQuad, renderTex, fboHandle;
 
+    float tPrev;
+    float angle;
+    float rotSpeed;
     GLSLProgram prog;
     void setMatrices();
     void compile();
+
+    void setupFBO();
+    void pass1();
+    void pass2();
 
 public:
     SceneBasic_Uniform();
