@@ -193,6 +193,7 @@ void SceneBasic_Uniform::pass1() {
     prog.setUniform("Material.Shininess", 100.0f);
 
     model = mat4(1.0f);
+    model = glm::translate(model, vec3(1.0f,1.0f, 3.0f));
     model = glm::rotate(model, glm::radians(90.0f), vec3(1.0f, 0.0f, 0.0f));
     setMatrices();
     torus.render();
