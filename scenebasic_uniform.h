@@ -23,7 +23,7 @@ private:
     //Teapot teapot;
     std::unique_ptr<ObjMesh> mesh;
     //Cube cube;
-    GLuint fsQuad, renderTex, fboHandle;
+    GLuint fsQuad, renderTex,intermediateTex, renderFBO, intermediateFBO;
 
     float tPrev;
     float angle;
@@ -35,6 +35,8 @@ private:
     void setupFBO();
     void pass1();
     void pass2();
+    void pass3();
+    float gauss(float, float);
 
 public:
     SceneBasic_Uniform();
