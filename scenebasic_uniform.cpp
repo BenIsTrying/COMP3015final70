@@ -167,6 +167,8 @@ void SceneBasic_Uniform::pass1() {
 
     model = mat4(1.0f);
     model = glm::rotate(model, glm::radians(0.0f), vec3(1.0f, 0.0f, 0.0f));
+
+    model = glm::translate(model, vec3(0.0f, -5.75f, 0.0f));
     
     setMatrices();
     mesh->render();
@@ -179,7 +181,7 @@ void SceneBasic_Uniform::pass1() {
     prog.setUniform("Material.Shininess", 1.0f);
 
     model = mat4(1.0f);
-    model = glm::translate(model,vec3(0.0f, -0.75f, 0.0f));
+    model = glm::translate(model,vec3(0.0f, -5.75f, 0.0f));
     setMatrices();
     plane.render();
     //std::cout << "plane should render";// i now know it is indeed rendering
