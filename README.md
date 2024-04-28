@@ -42,6 +42,9 @@ The vertex shader works by using an abojects vertices to calculate how shaded or
 
 currently the program has the code for laoding and displaying fog, this worked within previous versions avaliable in the history tab on github, many functions and features have been made but cannot exist together due to conflicting lighting techniques, pervious versions had edge detection, gaussian blur, fog, textures, rotation animations and spot lights. 
 
+## github
+https://github.com/BenIsTrying/COMP3015final70.git
+
 ## youtube video
 https://youtu.be/CWZNnsWrXJM
 
