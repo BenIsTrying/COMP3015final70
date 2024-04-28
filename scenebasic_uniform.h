@@ -26,7 +26,9 @@ private:
     std::unique_ptr<ObjMesh> mesh;
     //Cube cube;
     GLuint fsQuad, renderTex,intermediateTex, renderFBO, intermediateFBO,
-        hdrFBO, quad, hdrTex,avgTex;
+        hdrFBO, quad, hdrTex,avgTex, blurFbo, tex1, tex2;
+    GLuint linearSampler, nearestSampler;
+    int bloomBufWidth, bloomBufHeight;
 
     float tPrev;
     float angle;
@@ -39,6 +41,8 @@ private:
     void pass1();
     void pass2();
     void pass3();
+    void pass4();
+    void pass5();
     void computeLogAveLuminance();
     float gauss(float, float);
     void drawScene();

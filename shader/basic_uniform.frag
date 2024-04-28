@@ -5,14 +5,19 @@ in vec3 Normal;
 in vec2 TexCoord;
 
 layout (binding=0) uniform sampler2D hdrTex;
+layout (binding=1) uniform sampler2D BlurTex1;
+layout (binding=2) uniform sampler2D BlurTex2;
 
 uniform float EdgeThreshold;
 uniform int Pass;
-uniform float Weight[5];
+uniform float LumThresh;
+uniform float PixOffset[10]=float[](0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0);
+uniform float Weight[10];
+
 uniform float Avelum;
 uniform float Exposure=0.35;
 uniform float White=0.929;
-uniform bool DoToneMap=true;
+//uniform bool DoToneMap=true;
 
 const vec3 lum=vec3(0.2126, 0.7152, 0.0722);
 
@@ -30,6 +35,10 @@ uniform mat3 xyz2rgb=mat3(
 -1.5371385,1.8760108,-0.2040259,
 -0.4985314,0.0415560,1.0572252
 );
+
+float luminance(vec3 color){
+    return 0.2126*color.r+0.7152*color.g+0.0722*color.b;
+}
 
 uniform struct LightInfo{
     vec4 Position;
@@ -67,36 +76,78 @@ vec3 blinnPhong(vec3 position, vec3 n,int i){
 
 
 
-void pass1(){
+vec4 pass1(){
     vec3 n=normalize(Normal);
-    HdrColor=vec3(0.0);
+    vec3 color=vec3(0.0);
     for (int i=0;i<3;i++)
-        HdrColor+=blinnPhong(Position, n, i);
+        color+=blinnPhong(Position, n, i);
+    return vec4(color,1);
 }
 
-void pass2(){
-    vec4 color=texture(hdrTex,TexCoord);
-    vec3 xyzCol=rgb2xyz*vec3(color);
-    float xyzSum=xyzCol.x+xyzCol.y+xyzCol.z;
-    vec3 xyYCol=vec3(xyzCol.x/xyzSum, xyzCol.y/xyzSum,xyzCol.y);
-
-    float L=(Exposure*xyYCol.z)/Avelum;
-    L=(L*(1+L/(White*White)))/(1+L);
-    xyzCol.x=(L*xyYCol.x)/xyYCol.y;
-    xyzCol.y=L;
-    xyzCol.z=(L*(1-xyYCol.x-xyYCol.y))/xyYCol.y;
-    if(DoToneMap)
-        FragColor=vec4(xyz2rgb*xyzCol,1.0);
+vec4 pass2(){
+    vec4 val=texture(hdrTex,TexCoord);
+    
+    if(luminance(val.rgb)>LumThresh)
+        return val;
     else
-        FragColor=color;
+        return vec4(0.0);
 
 }
+vec4 pass3(){
+    float dy=1.0/(textureSize(BlurTex1,0)).y;
+    vec4 sum=texture(BlurTex1,TexCoord)*Weight[0];
+    for (int i = 0; i<10;i++){
+        sum+=texture(BlurTex1,TexCoord+vec2(0.0,PixOffset[i])*dy)*Weight[i];
+        sum+=texture(BlurTex1,TexCoord-vec2(0.0,PixOffset[i])*dy)*Weight[i];
+    
+    }
+    return sum;
+}
+
+vec4 pass4(){
+    float dx=1.0/(textureSize(BlurTex2,0)).y;
+    vec4 sum=texture(BlurTex1,TexCoord)*Weight[0];
+    for (int i = 0; i<10;i++){
+        sum+=texture(BlurTex2,TexCoord+vec2(0.0,PixOffset[i])*dx)*Weight[i];
+        sum+=texture(BlurTex2,TexCoord-vec2(0.0,PixOffset[i])*dx)*Weight[i];
+    
+    }
+    return sum;
+}
+// (Read from BlurTex1 and HdrTex, write to default buffer).
+vec4 pass5() {
+    /////////////// Tone mapping ///////////////
+    // Retrieve high-res color from texture
+    vec4 color = texture( hdrTex, TexCoord );
+    // Convert to XYZ
+    vec3 xyzCol = rgb2xyz * vec3(color);
+    // Convert to xyY
+    float xyzSum = xyzCol.x + xyzCol.y + xyzCol.z;
+    vec3 xyYCol = vec3( xyzCol.x / xyzSum, xyzCol.y / xyzSum, xyzCol.y);
+    // Apply the tone mapping operation to the luminance (xyYCol.z or xyzCol.y)
+    float L = (Exposure * xyYCol.z) / Avelum;
+    L = (L * ( 1 + L / (White * White) )) / ( 1 + L );
+    // Using the new luminance, convert back to XYZ
+    xyzCol.x = (L * xyYCol.x) / (xyYCol.y);
+    xyzCol.y = L;
+    xyzCol.z = (L * (1 - xyYCol.x - xyYCol.y))/xyYCol.y;
+    // Convert back to RGB
+    vec4 toneMapColor = vec4( xyz2rgb * xyzCol, 1.0);
+    ///////////// Combine with blurred texture /////////////
+    // We want linear filtering on this texture access so that
+    // we get additional blurring.
+    vec4 blurTex = texture(BlurTex1, TexCoord);
+    return toneMapColor + blurTex;
+}
+
 
 
 
 
 void main() {
-    if (Pass==1) pass1();
-    else if (Pass==2) pass2();
-    //else if (Pass==3) FragColor=pass3();
+    if (Pass==1) FragColor=pass1();
+    else if (Pass==2) FragColor=pass2();
+    else if (Pass==3) FragColor=pass3();
+    else if (Pass==4) FragColor=pass4();
+    else if (Pass==5) FragColor=pass5();
 }
