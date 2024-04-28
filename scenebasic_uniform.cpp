@@ -150,6 +150,7 @@ void SceneBasic_Uniform::update(float t)
 void SceneBasic_Uniform::render()
 {
     pass1();
+    glFlush();
     computeLogAveLuminance();
     pass2();
     pass3();
@@ -173,13 +174,7 @@ void SceneBasic_Uniform::pass1() {
 void SceneBasic_Uniform::passFog() {
 
 
-    
-    
-
-   
-
-
-
+ 
 }
 void SceneBasic_Uniform::pass2() {
 
@@ -381,7 +376,7 @@ void SceneBasic_Uniform::setupFBO() {
     model = glm::translate(mat4(1.0f), vec3(0.0f, -5.0f, 0.0f));
     
 
-    teapot.render();
+    //teapot.render();
     // Unbind the framebuffer, and revert to default framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
