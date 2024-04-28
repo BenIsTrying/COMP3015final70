@@ -13,6 +13,7 @@
 #include "helper/teapot.h"
 #include "helper/objmesh.h"
 #include "helper/cube.h"
+#include "helper/sphere.h"
 
 
 class SceneBasic_Uniform : public Scene
@@ -20,10 +21,12 @@ class SceneBasic_Uniform : public Scene
 private:
     //Torus torus;
     Plane plane;
-    //Teapot teapot;
+    //Sphere sphere;
+    Teapot teapot;
     std::unique_ptr<ObjMesh> mesh;
     //Cube cube;
-    GLuint fsQuad, renderTex,intermediateTex, renderFBO, intermediateFBO;
+    GLuint fsQuad, renderTex,intermediateTex, renderFBO, intermediateFBO,
+        hdrFBO, quad, hdrTex,avgTex;
 
     float tPrev;
     float angle;
@@ -36,7 +39,9 @@ private:
     void pass1();
     void pass2();
     void pass3();
+    void computeLogAveLuminance();
     float gauss(float, float);
+    void drawScene();
 
 public:
     SceneBasic_Uniform();
