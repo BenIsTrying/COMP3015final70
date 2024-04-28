@@ -39,6 +39,9 @@ The CPP files are where many of the main processes happen, this is where the mai
 
 The vertex shader works by using an abojects vertices to calculate how shaded or bright it needs to be, this means simple shapes that are flat usualy dont show the shadign as much as round shape would (refering to mostly phong and britness as flat during testing the flat model i used didnt have enough faces to even be brighted more than the rest of the object, this is now why the current modle is a round ball shaped character.)
 
+## youtube video
+https://youtu.be/CWZNnsWrXJM
+
 
 
 
