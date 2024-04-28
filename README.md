@@ -17,8 +17,7 @@ Version 10.0.22631
 This code works by calling on fucntions from *Glad*, *GLM*, *GLFW*, and *openGL*.
 All versions relate to the sugestted version from COMP3015 overview of assignments. 
 
-Within the current version of the program the user presses run and th ecode witll then import all neccsary exsternal files and load a model held within the meadia folder, this then is displayed. Once the modle is loaded in the vertex shader then creates two functions actign as the lights with attributes like position, and Material this is how the shader assigns values on how reflective or dark an object should be.
-after these two are made the program then calculates how this should affect the modle and applys this to the scene.
+Within the current version of the program the user presses run and the program will load all models and textures then go through each function and shader to display the alterd visuals.
 
 ## How does your code fit together and how should a programmer navigate it (not intended to be an exercise in formally documenting the code)? 
 
@@ -38,6 +37,10 @@ The CPP files are where many of the main processes happen, this is where the mai
 ## Anything else which will help us to understand how your prototype works. 
 
 The vertex shader works by using an abojects vertices to calculate how shaded or bright it needs to be, this means simple shapes that are flat usualy dont show the shadign as much as round shape would (refering to mostly phong and britness as flat during testing the flat model i used didnt have enough faces to even be brighted more than the rest of the object, this is now why the current modle is a round ball shaped character.)
+
+### issues
+
+currently the program has the code for laoding and displaying fog, this worked within previous versions avaliable in the history tab on github, many functions and features have been made but cannot exist together due to conflicting lighting techniques, pervious versions had edge detection, gaussian blur, fog, textures, rotation animations and spot lights. 
 
 ## youtube video
 https://youtu.be/CWZNnsWrXJM
