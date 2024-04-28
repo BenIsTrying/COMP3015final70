@@ -46,7 +46,9 @@ void SceneBasic_Uniform::initScene()
     
     prog.setUniform("Light.L", vec3(1.0f));
     prog.setUniform("Light.La", vec3(0.2f));
-
+    prog.setUniform("Fog.MaxDist", 10.f);
+    prog.setUniform("Fog.MinDist", 1.0f);
+    prog.setUniform("Fog.Color", 0.5f,0.5f,0.5f);
     
     
     //GLuint spotTexture = Texture::loadTexture("media/spot/spot_texture.png");
