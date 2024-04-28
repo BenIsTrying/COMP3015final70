@@ -238,7 +238,7 @@ void SceneBasic_Uniform::drawScene() {
 
     prog.setUniform("Material.Kd", vec3(0.0f, 1.0f, 0.0f));
     model = mat4(1.0f);
-    model = glm::translate(model, vec3(-3.0f, -3.0f, 2.0f));
+    model = glm::translate(model, vec3(3.0f, -3.0f, 1.0f));
     setMatrices();
     teapot.render();
     
