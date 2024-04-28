@@ -46,6 +46,15 @@ void SceneBasic_Uniform::initScene()
     prog.setUniform("Lights[2].La", intense);
     projection = mat4(1.0f);
     angle = glm::pi<float>() / 2.0f;
+
+    prog.setUniform("Fog.MaxDist", 10.f);
+    prog.setUniform("Fog.MinDist", 0.1f);
+    prog.setUniform("Fog.Color", 0.5f, 0.5f, 0.5f);
+
+    GLuint texID = Texture::loadTexture("media/texture/gold.jpg");
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texID);
+
     setupFBO();
     // Array for full-screen quad
     GLfloat verts[] = {
@@ -146,6 +155,7 @@ void SceneBasic_Uniform::render()
     pass3();
     pass4();
     pass5();
+    passFog();
 }
 void SceneBasic_Uniform::pass1() {
     prog.setUniform("Pass", 1);
@@ -155,10 +165,21 @@ void SceneBasic_Uniform::pass1() {
     glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
-    view = glm::lookAt(vec3(2.0f, 0.0, 14.0), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+    view = glm::lookAt(vec3(2.0f, 0.0, 18.0), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 12.0f, 0.0f));
     //view = glm::lookAt(vec3(7.0f * cos(angle), 4.0f,7.0f * sin(angle)), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
     projection = glm::perspective(glm::radians(60.0f), (float)width / height, 0.3f, 100.0f);
     drawScene();
+}
+void SceneBasic_Uniform::passFog() {
+
+
+    
+    
+
+   
+
+
+
 }
 void SceneBasic_Uniform::pass2() {
 
@@ -231,16 +252,14 @@ void SceneBasic_Uniform::drawScene() {
 
 
     prog.setUniform("Material.Kd", vec3(0.2f, 0.8f, 0.2f));
+    
     model = mat4(1.0f);
     model = glm::translate(model, vec3(-6.0f, -5.0f, 2.0f));
+    
     setMatrices();
     mesh->render();
+    
 
-    prog.setUniform("Material.Kd", vec3(0.0f, 1.0f, 0.0f));
-    model = mat4(1.0f);
-    model = glm::translate(model, vec3(3.0f, -3.0f, 1.0f));
-    setMatrices();
-    teapot.render();
     
 
     
@@ -359,6 +378,10 @@ void SceneBasic_Uniform::setupFBO() {
     // Bind tex1 to the FBO
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex1, 0);
     glDrawBuffers(1, drawBuffers);
+    model = glm::translate(mat4(1.0f), vec3(0.0f, -5.0f, 0.0f));
+    
+
+    teapot.render();
     // Unbind the framebuffer, and revert to default framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

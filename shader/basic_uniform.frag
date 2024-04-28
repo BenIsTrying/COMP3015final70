@@ -7,6 +7,7 @@ in vec2 TexCoord;
 layout (binding=0) uniform sampler2D hdrTex;
 layout (binding=1) uniform sampler2D BlurTex1;
 layout (binding=2) uniform sampler2D BlurTex2;
+layout (binding=3) uniform sampler2D renderTex;
 
 uniform float EdgeThreshold;
 uniform int Pass;
@@ -61,7 +62,7 @@ uniform struct FogInfo{
 
 vec3 blinnPhong(vec3 position, vec3 n,int i){
     vec3 diffuse=vec3(0), spec=vec3(0);
-    //vec3 texColor = texture(renderTex,TexCoord).rgb;
+    vec3 texColor = texture(renderTex,TexCoord).rgb;
     vec3 ambient=Lights[i].La*Material.Ka;
     vec3 s=normalize(Lights[i].Position.xyz-position);
     float sDotN=max(dot(s,n),0.0);
@@ -77,6 +78,7 @@ vec3 blinnPhong(vec3 position, vec3 n,int i){
 
 
 vec4 pass1(){
+    
     vec3 n=normalize(Normal);
     vec3 color=vec3(0.0);
     for (int i=0;i<3;i++)
@@ -140,7 +142,19 @@ vec4 pass5() {
     return toneMapColor + blurTex;
 }
 
-
+vec4 passFog(){
+    float dist=abs(Position.z);
+    float fogFactor=(Fog.MaxDist-dist)/(Fog.MaxDist-Fog.MinDist);
+    fogFactor=clamp(fogFactor,0.0,1.0);
+    vec3 shadeColor;
+    vec3 n=normalize(Normal);
+    for (int i=0;i<3;i++)
+        shadeColor+=blinnPhong(Position, n, i);
+   
+    vec3 color=mix(Fog.Color,shadeColor,fogFactor);
+    FragColor = vec4(color,1.0);
+    return vec4(FragColor);
+}
 
 
 
@@ -150,4 +164,6 @@ void main() {
     else if (Pass==3) FragColor=pass3();
     else if (Pass==4) FragColor=pass4();
     else if (Pass==5) FragColor=pass5();
+    else if (Pass==6)FragColor=passFog();
+
 }

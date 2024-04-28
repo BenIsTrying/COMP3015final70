@@ -43,6 +43,7 @@ private:
     void pass3();
     void pass4();
     void pass5();
+    void passFog();
     void computeLogAveLuminance();
     float gauss(float, float);
     void drawScene();
